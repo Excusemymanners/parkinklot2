@@ -24,6 +24,13 @@ tasks.withType(JavaCompile) {
 dependencies {
     compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
 
+    //JPA/Hibernate
+    implementation('org.hibernate.orm:hibernate-core:6.5.2.Final')
+    implementation('org.glassfish.jaxb:jaxb-runtime:4.0.5')
+
+    //H2 Database
+    implementation('com.h2database:h2:2.2.224')
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
