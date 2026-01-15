@@ -2,9 +2,6 @@ package org.parkinglot.parkinglot.entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "car")
 public class Car {
@@ -13,33 +10,24 @@ public class Car {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
-
     @Column(name = "parking_spot")
     private String parkingSpot;
 
     @Column(name = "license_plate")
     private String licensePlate;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Car owner;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
-    public Car getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Car owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
+
 
     public String getParkingSpot() {
         return parkingSpot;
