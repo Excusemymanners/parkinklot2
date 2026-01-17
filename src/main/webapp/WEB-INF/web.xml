@@ -3,4 +3,63 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>jdbcRealmParkingLot</realm-name>
+        <form-login-config>
+            <form-login-page>/Login</form-login-page>
+            <form-error-page>/Login?error=true</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>View Cars</web-resource-name>
+            <url-pattern>/Cars</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>READ_CARS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Modify Cars</web-resource-name>
+            <url-pattern>/AddCar</url-pattern>
+            <url-pattern>/EditCar</url-pattern>
+            <url-pattern>/DeleteCar</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>WRITE_CARS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>View Users</web-resource-name>
+            <url-pattern>/Users</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>READ_USERS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Modify Users</web-resource-name>
+            <url-pattern>/AddUser</url-pattern>
+            <url-pattern>/EditUser</url-pattern>
+            <url-pattern>/DeleteUser</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>WRITE_USERS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role><role-name>READ_CARS</role-name></security-role>
+    <security-role><role-name>WRITE_CARS</role-name></security-role>
+    <security-role><role-name>READ_USERS</role-name></security-role>
+    <security-role><role-name>WRITE_USERS</role-name></security-role>
+
 </web-app>
