@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "car")
 public class Car {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -20,14 +21,15 @@ public class Car {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    public User getOwner() {
-        return owner;
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setId(Long id) {
+        this.id = id;
     }
-
 
     public String getParkingSpot() {
         return parkingSpot;
@@ -45,14 +47,11 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public Long getId() {
-        return id;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
-
-
-
 }

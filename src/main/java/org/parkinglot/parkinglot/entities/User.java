@@ -1,41 +1,46 @@
 package org.parkinglot.parkinglot.entities;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Changed to IDENTITY to match your Car entity
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
-    public String getUsername() {
-        return username;
-    }
-
+    @Column(name = "password")
     private String password;
 
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "owner", orphanRemoval = true)
-    private Set<Car> cars = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Car> cars = new ArrayList<>();
 
-    public Set<Car> getCars() {
-        return cars;
+    // --- Getters and Setters ---
+
+    public Long getId() {
+        return id;
     }
 
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -54,16 +59,11 @@ public class User {
         this.email = email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public Long getId() {
-        return id;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }
