@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -30,7 +30,7 @@ public class AddCarPhoto extends HttpServlet {
         }
 
         // 4. Forward to the JSP
-        request.getRequestDispatcher("/WEB-INF/pages/addCarPhoto.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/addCarPhoto.jsp").forward(request, response);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Users;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -6,6 +6,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.parkinglot.parkinglot.common.UserDto;
 import org.parkinglot.parkinglot.ejb.UserBean;
+import org.parkinglot.parkinglot.servelts.Cars.AddCar;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AddUser extends HttpServlet {
         List<UserDto> users = userBean.findAllUsers();
         request.setAttribute("users", users);
 
-        request.getRequestDispatcher("/WEB-INF/pages/addUser.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/users/addUser.jsp").forward(request, response);
     }
 
     @Override

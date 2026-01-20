@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -33,7 +33,7 @@ public class AddCar extends HttpServlet {
         List<UserDto> users = userBean.findAllUsers();
         request.setAttribute("users", users);
 
-        request.getRequestDispatcher("/WEB-INF/pages/addCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/addCar.jsp").forward(request, response);
     }
 
     @Override

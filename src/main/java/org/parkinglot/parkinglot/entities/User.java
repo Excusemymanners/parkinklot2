@@ -1,6 +1,8 @@
 package org.parkinglot.parkinglot.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +15,14 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Basic
     @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Email
     @Column(name = "email")
     private String email;
 

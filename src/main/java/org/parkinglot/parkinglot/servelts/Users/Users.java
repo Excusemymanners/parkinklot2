@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Users;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -35,7 +35,7 @@ public class Users extends HttpServlet {
         }
 
         // 3. Forward ONLY AFTER all attributes are set
-        request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/users/users.jsp").forward(request, response);
     }
 
     @Override

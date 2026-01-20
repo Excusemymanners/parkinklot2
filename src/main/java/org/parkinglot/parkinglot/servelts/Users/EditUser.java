@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Users;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -8,7 +8,6 @@ import org.parkinglot.parkinglot.common.UserDto;
 import org.parkinglot.parkinglot.ejb.UserBean;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 @WebServlet(name = "EditUser", value = "/EditUser")
@@ -27,7 +26,7 @@ public class EditUser extends HttpServlet {
         List<String> allGroups = List.of("WRITE_CARS", "READ_CARS", "WRITE_USERS", "READ_USERS", "INVOICING");
         request.setAttribute("allGroups", allGroups);
 
-        request.getRequestDispatcher("/WEB-INF/pages/editUser.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/users/editUser.jsp").forward(request, response);
     }
 
     @Override

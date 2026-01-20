@@ -1,6 +1,7 @@
 package org.parkinglot.parkinglot.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "car")
@@ -11,9 +12,11 @@ public class Car {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Size(min = 1, max = 100)
     @Column(name = "parking_spot")
     private String parkingSpot;
 
+    @Size(min = 3, max = 100)
     @Column(name = "license_plate")
     private String licensePlate;
 

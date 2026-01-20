@@ -1,4 +1,4 @@
-package org.parkinglot.parkinglot.servelts;
+package org.parkinglot.parkinglot.servelts.Cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
