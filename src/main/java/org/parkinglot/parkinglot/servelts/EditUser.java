@@ -19,14 +19,14 @@ public class EditUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 1. Get the ID of the user to edit
         Long userId = Long.parseLong(request.getParameter("id"));
-
-        // 2. Fetch user data and the list of available groups for the checkboxes
         UserDto user = userBean.findById(userId);
         request.setAttribute("user", user);
 
-        // 3. Forward to the edit page
+        // Add the list of all possible groups/rights
+        List<String> allGroups = List.of("WRITE_CARS", "READ_CARS", "WRITE_USERS", "READ_USERS", "INVOICING");
+        request.setAttribute("allGroups", allGroups);
+
         request.getRequestDispatcher("/WEB-INF/pages/editUser.jsp").forward(request, response);
     }
 

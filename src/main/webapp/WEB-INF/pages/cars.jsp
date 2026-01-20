@@ -40,10 +40,18 @@
                     <div class="col">${car.parkingSpot}</div>
                     <div class="col">${car.ownerName}</div>
                     <div class="col">
+                        <img src="${pageContext.request.contextPath}/CarPhotos?id=${car.id}" width="48"/> </div>
+                    <div class="col">
                             <%-- Only show Edit button if user has permission --%>
                         <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
                             <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit</a>
+
                         </c:if>
+                                <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                                    <a class="btn btn-secondary"
+                                       href="${pageContext.request.contextPath}/AddCarPhoto?id=${car.id}">
+                                        Add photo
+                                    </a></c:if>
                     </div>
                 </div>
             </c:forEach>

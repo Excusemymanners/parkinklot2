@@ -4,17 +4,19 @@
 
 <t:pageTemplate pageTitle="Edit User">
     <div class="container">
-        <h1>Edit User</h1>
+        <h1 class="my-4">Edit User</h1>
+
         <form class="needs-validation" method="POST" action="${pageContext.request.contextPath}/EditUser">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="username">Username</label>
+                    <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username"
                            value="${user.username}" readonly>
                     <small class="text-muted">Username cannot be changed.</small>
                 </div>
+
                 <div class="col-md-6 mb-3">
-                    <label for="email">Email</label>
+                    <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email"
                            value="${user.email}" required>
                 </div>
@@ -22,37 +24,44 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="password">Password (Leave blank to keep current)</label>
+                    <label for="password" class="form-label">Password (Leave blank to keep current)</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
+
                 <div class="col-md-6 mb-3">
-                    <label>Update Roles</label>
-                        <%--
-                            Note: In a more advanced version, you would check if the user
-                            already has these roles to pre-check the boxes.
-                        --%>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="userGroups" value="READ_CARS" id="roleCars">
-                        <label class="form-check-label" for="roleCars">READ_CARS</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="userGroups" value="READ_USERS" id="roleUsers">
-                        <label class="form-check-label" for="roleUsers">READ_USERS</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="userGroups" value="WRITE_CARS" id="roleWriteCars">
-                        <label class="form-check-label" for="roleWriteCars">WRITE_CARS</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="userGroups" value="WRITE_USERS" id="roleWriteUsers">
-                        <label class="form-check-label" for="roleWriteUsers">WRITE_USERS</label>
+                    <label class="form-label">Update Roles</label>
+                    <div class="card p-3 shadow-sm">
+                        <c:forEach var="group" items="${allGroups}">
+                            <div class="form-check">
+                                    <%-- Determine if this group should be checked --%>
+                                <c:set var="isChecked" value="false" />
+                                <c:forEach var="currentGroup" items="${currentUserGroups}">
+                                    <c:if test="${currentGroup eq group}">
+                                        <c:set var="isChecked" value="true" />
+                                    </c:if>
+                                </c:forEach>
+
+                                <input class="form-check-input" type="checkbox" name="userGroups"
+                                       value="${group}" id="role_${group}"
+                                       <c:if test="${isChecked}">checked</c:if>>
+                                <label class="form-check-label" for="role_${group}">
+                                        ${group}
+                                </label>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
 
             <hr class="mb-4">
+
+                <%-- Hidden field to pass the user ID to the Servlet --%>
             <input type="hidden" name="user_id" value="${user.id}">
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Save Changes</button>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-lg flex-grow-1" type="submit">Save Changes</button>
+                <a href="${pageContext.request.contextPath}/Users" class="btn btn-secondary btn-lg">Cancel</a>
+            </div>
         </form>
     </div>
 </t:pageTemplate>

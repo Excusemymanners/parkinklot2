@@ -27,7 +27,8 @@ public class DeleteUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
 
-        String[] userIdsAsString = request.getParameterValues("userIds");
+        // Change "userIds" to "user_ids" to match your JSP checkboxes
+        String[] userIdsAsString = request.getParameterValues("user_ids");
 
         if (userIdsAsString != null) {
             List<Long> userIds = new ArrayList<>();

@@ -108,4 +108,19 @@ public class UserBean {
 
         assignGroupsToUser(username, groups);
     }
+
+    public Collection<String> findUsernamesByUserIds(Collection<Long> userIds) {
+        List<String> usernames =
+                entityManager.createQuery("SELECT u.username FROM User u WHERE u.id IN :userIds", String.class)
+                        .setParameter("userIds", userIds)
+                        .getResultList();
+
+        return usernames;
+    }
+
+    public Collection<String> findUserGroups(String username) {
+        return entityManager.createQuery("SELECT g.userGroup FROM UserGroup g WHERE g.username = :username", String.class)
+                .setParameter("username", username)
+                .getResultList();
+    }
 }
