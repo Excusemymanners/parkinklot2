@@ -80,31 +80,33 @@ public class CarsBean {
     }
 
     public void updateCar(Long carId, String licensePlate, String parkingSpot, Long ownerId) {
-        LOG.info("Inside updateCar carId: " + carId);
+        LOG.info("Updating carId: " + carId + " with ownerId: " + ownerId);
+        try {
+            // 1. Încărcăm mașina
+            Car car = entityManager.find(Car.class, carId);
+            if (car == null) return;
 
-        // 1. Find the car to update
-        Car car = entityManager.find(Car.class, carId);
-        if (car == null) return;
+            // 2. Actualizăm câmpurile simple
+            car.setLicensePlate(licensePlate);
+            car.setParkingSpot(parkingSpot);
 
-        // 2. Update basic fields
-        car.setLicensePlate(licensePlate);
-        car.setParkingSpot(parkingSpot);
+            // 3. Gestionăm schimbarea proprietarului
+            // Verificăm dacă owner-ul s-a schimbat efectiv
+            if (car.getOwner() == null || !car.getOwner().getId().equals(ownerId)) {
+                User newOwner = entityManager.find(User.class, ownerId);
+                if (newOwner != null) {
+                    car.setOwner(newOwner);
+                    // Nu mai este nevoie de user.getCars().add(car) aici,
+                    // deoarece Car este "owning side" al relației.
+                }
+            }
 
-        // 3. Handle Owner Change
-        User oldOwner = car.getOwner();
-        if (oldOwner.getId().equals(ownerId)) {
-            // Owner hasn't changed, nothing to do with the relationship
-            return;
-        }
+            // 4. Forțăm sincronizarea cu baza de date pentru a vedea eroarea imediat
+            entityManager.flush();
 
-        // Remove from old owner's list
-        oldOwner.getCars().remove(car);
-
-        // Find new owner and link
-        User newOwner = entityManager.find(User.class, ownerId);
-        if (newOwner != null) {
-            car.setOwner(newOwner);
-            newOwner.getCars().add(car);
+        } catch (Exception e) {
+            LOG.severe("Transaction failed: " + e.getMessage());
+            throw new EJBException(e);
         }
     }
 
@@ -129,7 +131,7 @@ public class CarsBean {
         Car car = entityManager.find(Car.class, carId);
 
         if (car != null) {
-            // 1. Remove existing photo if it exists to prevent duplicate relationship errors
+
             if (car.getPhoto() != null) {
                 CarPhoto oldPhoto = car.getPhoto();
                 car.setPhoto(null);
@@ -137,13 +139,11 @@ public class CarsBean {
                 entityManager.flush(); // Crucial: clear the database slot before new record
             }
 
-            // 2. Setup new photo
+
             CarPhoto photo = new CarPhoto();
             photo.setFilename(filename);
             photo.setFileType(fileType);
             photo.setFileContent(fileContent);
-
-            // 3. Link bidirectional relationship
             photo.setCar(car);
             car.setPhoto(photo);
 
@@ -152,7 +152,7 @@ public class CarsBean {
     }
 
     public CarPhotoDto findPhotoByCarId(Long carId) {
-        // Standardizing on Long carId to match Entity ID type
+
         List<CarPhoto> photos = entityManager
                 .createQuery("SELECT p FROM CarPhoto p where p.car.id = :id", CarPhoto.class)
                 .setParameter("id", carId)

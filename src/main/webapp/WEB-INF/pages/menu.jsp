@@ -44,8 +44,7 @@
                             </li>
                         </c:otherwise>
                     </c:choose>
-                    <p class="text-white">Logged in as: ${pageContext.request.remoteUser}</p>
-                    <p class="text-white">Has READ_USERS role: ${pageContext.request.isUserInRole('READ_USERS')}</p>
+                    
                 </ul>
             </div>
         </div>

@@ -11,10 +11,9 @@ import java.util.Set;
 @SessionScoped
 public class InvoiceBean implements Serializable {
 
-    // Remove 'static' here
+
     private Set<Long> userIds = new HashSet<>();
 
-    // Remove 'static' here
     public Set<Long> getUserIds() {
         return userIds;
     }

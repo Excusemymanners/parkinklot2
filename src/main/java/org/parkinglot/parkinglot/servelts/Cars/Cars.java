@@ -27,16 +27,26 @@ public class Cars extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
 
+        // 1. Preluăm lista actuală de mașini din baza de date
         List<CarDto> cars = carsBean.findAllCars();
-
         request.setAttribute("cars", cars);
 
-        request.setAttribute("numberOfFreeParkingSpots", 10);
+        // 2. Stabilim capacitatea totală a parcării (ex: 20 de locuri)
+        int totalCapacity = 20;
+
+        // 3. Calculăm locurile libere: Total - Mașini ocupate
+        // Folosim Math.max(0, ...) pentru a nu afișa numere negative în caz de erori de date
+        int numberOfFreeParkingSpots = totalCapacity - cars.size();
+
+        // 4. Trimitem valoarea calculată către JSP
+        request.setAttribute("numberOfFreeParkingSpots", Math.max(0, numberOfFreeParkingSpots));
+
         request.getRequestDispatcher("WEB-INF/pages/cars/cars.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
+        // Logica pentru POST (de obicei Delete sau alte acțiuni)
     }
 }

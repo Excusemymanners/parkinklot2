@@ -3,7 +3,7 @@
     import jakarta.persistence.*;
 
     @Entity
-    @Table(name = "user_grups") // Ensure this matches your GlassFish Realm 'Group Table'
+    @Table(name = "user_grups")
     public class UserGroup {
 
         @Id
@@ -14,7 +14,7 @@
         @Column(name = "username", nullable = false)
         private String username;
 
-        @Column(name = "user_group", nullable = false) // Ensure this matches your 'Group Name Column'
+        @Column(name = "user_group", nullable = false)
         private String userGroup;
 
         // Getters and Setters

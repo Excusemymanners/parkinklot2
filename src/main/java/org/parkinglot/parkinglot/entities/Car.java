@@ -20,14 +20,28 @@ public class Car {
     @Column(name = "license_plate")
     private String licensePlate;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
-    // FIX: Map at the field level and add orphanRemoval for clean updates
     @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private CarPhoto photo;
 
+    // Getters și Setters
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getParkingSpot() { return parkingSpot; }
+    public void setParkingSpot(String parkingSpot) { this.parkingSpot = parkingSpot; }
+
+    public String getLicensePlate() { return licensePlate; }
+    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
+
+    public User getOwner() { return owner; }
+    public void setOwner(User owner) { this.owner = owner; }
+
+    // FIX: Adăugat return pentru a rezolva eroarea de compilare
     public CarPhoto getPhoto() {
         return photo;
     }
@@ -35,13 +49,4 @@ public class Car {
     public void setPhoto(CarPhoto photo) {
         this.photo = photo;
     }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getParkingSpot() { return parkingSpot; }
-    public void setParkingSpot(String parkingSpot) { this.parkingSpot = parkingSpot; }
-    public String getLicensePlate() { return licensePlate; }
-    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
-    public User getOwner() { return owner; }
-    public void setOwner(User owner) { this.owner = owner; }
 }
